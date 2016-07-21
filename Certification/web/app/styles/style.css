@@ -1,0 +1,37 @@
+body {
+    background-color: #f3f3f3;
+}
+
+#wakanda-logo {
+    margin: 0;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    #wakanda-logo {
+        margin: 5% 0;
+    }
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  font-family: "Open Sans";
+  color: #1d1d1b;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-top: 48px;
+  box-sizing: border-box;
+}
+html body {
+  background-color: #f3f3f5;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+}

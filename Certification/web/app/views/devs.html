@@ -1,0 +1,19 @@
+<div class="panel panel-default row" ng-controller="devCtrl">
+	<div class="col-xs-3" >
+		<a ng-click="AllDevs()"   class="btn btn-block btn-default btn-lg">Home</a>
+		<a   ng-repeat="p in projects" ng-click="getDevByProjet(p)" class="btn btn-block btn-default btn-lg">{{p.name}}</a>
+   </div>
+	 <div class="col-xs-8" ng-init="AllDevs()">
+		<div class="well" ng-repeat="dev in devs ">
+			 <h3><strong>{{dev.fullname}}</strong>
+			 	<span class="pull-right label label-primary">Tasks : {{dev.taskCount}}</span>
+			</h3>
+			<button ui-sref="devdetails" ng-click="setDev(dev)" class="btn bn-success pull-right"> Details</button>
+			<span class="lead">{{dev.email}}</span>
+		</div>
+		<div class="pull-right btn-group">
+	 		<a 	ng-click="devs.$prevPage()" class="btn btn-default"	> 	&lt; </a>
+	 		<a 	ng-click="devs.$nextPage()" class="btn btn-default"	> 	&gt; </a>
+	    </div>
+	</div>
+</div>

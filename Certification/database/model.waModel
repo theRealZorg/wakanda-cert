@@ -1,0 +1,427 @@
+{
+	"toJSON": true,
+	"extraProperties": {
+		"version": "2",
+		"classes": {
+			"Project": {
+				"panelColor": "#E5B9B7",
+				"panel": {
+					"isOpen": "true",
+					"pathVisible": true,
+					"position": {
+						"X": 719,
+						"Y": 30
+					}
+				}
+			},
+			"Task": {
+				"panelColor": "#B2A2C7",
+				"panel": {
+					"isOpen": "true",
+					"pathVisible": true,
+					"position": {
+						"X": 759,
+						"Y": 305
+					}
+				}
+			},
+			"Developer": {
+				"panelColor": "#C3D69B",
+				"panel": {
+					"isOpen": "true",
+					"pathVisible": true,
+					"position": {
+						"X": 394,
+						"Y": 255
+					}
+				}
+			},
+			"Assignement": {
+				"panelColor": "#fff",
+				"panel": {
+					"isOpen": "true",
+					"pathVisible": true,
+					"position": {
+						"X": 426,
+						"Y": 59
+					}
+				}
+			},
+			"User": {
+				"panelColor": "#996699",
+				"panel": {
+					"isOpen": "true",
+					"pathVisible": true,
+					"position": {
+						"X": 69,
+						"Y": 101
+					}
+				}
+			}
+		},
+		"model": {
+			"scriptMode": "manual",
+			"workspaceLeft": 0,
+			"workspaceTop": 0,
+			"lastScriptLocation": {
+				"Developer": {
+					"computed": "Developer/Developer-events.js",
+					"method": "Developer/Developer-methods.js",
+					"events": "Developer/Developer-events.js"
+				},
+				"Task": {
+					"method": "Task/Task-methods.js"
+				}
+			}
+		}
+	},
+	"dataClasses": [
+		{
+			"name": "Assignement",
+			"className": "Assignement",
+			"collectionName": "AssignementCollection",
+			"scope": "public",
+			"attributes": [
+				{
+					"name": "ID",
+					"kind": "storage",
+					"scope": "public",
+					"unique": true,
+					"autosequence": true,
+					"type": "long",
+					"primKey": true
+				},
+				{
+					"name": "developer",
+					"kind": "relatedEntity",
+					"matchColumn": "dev",
+					"scope": "public",
+					"type": "Developer",
+					"path": "Developer"
+				},
+				{
+					"name": "project",
+					"kind": "relatedEntity",
+					"matchColumn": "prj",
+					"scope": "public",
+					"type": "Project",
+					"path": "Project"
+				},
+				{
+					"name": "AssignDate",
+					"kind": "storage",
+					"matchColumn": "date,dat",
+					"scope": "public",
+					"type": "date",
+					"simpleDate": false
+				}
+			]
+		},
+		{
+			"name": "Developer",
+			"className": "Developer",
+			"collectionName": "DeveloperCollection",
+			"matchTable": "Devlopper,User",
+			"scope": "public",
+			"attributes": [
+				{
+					"name": "ID",
+					"kind": "storage",
+					"scope": "public",
+					"unique": true,
+					"autosequence": true,
+					"type": "long",
+					"primKey": true
+				},
+				{
+					"name": "firstName",
+					"kind": "storage",
+					"matchColumn": "firstname",
+					"scope": "public",
+					"type": "string"
+				},
+				{
+					"name": "lastName",
+					"kind": "storage",
+					"matchColumn": "lastname",
+					"scope": "public",
+					"type": "string"
+				},
+				{
+					"name": "fullName",
+					"kind": "calculated",
+					"matchColumn": "fullname",
+					"scope": "public",
+					"type": "string",
+					"scriptKind": "javascript"
+				},
+				{
+					"name": "email",
+					"kind": "storage",
+					"scope": "public",
+					"type": "string",
+					"pattern": "^\\S+@\\S+$",
+					"events": [
+						{
+							"kind": "validate",
+							"from": "$mainModel.Developer.email.events.validate",
+							"userDefined": true
+						}
+					]
+				},
+				{
+					"name": "assignements",
+					"kind": "relatedEntities",
+					"matchColumn": "assignementCollection",
+					"scope": "public",
+					"type": "AssignementCollection",
+					"reversePath": true,
+					"path": "developer"
+				},
+				{
+					"name": "tasks",
+					"kind": "relatedEntities",
+					"matchColumn": "Tasks",
+					"scope": "public",
+					"type": "TaskCollection",
+					"reversePath": true,
+					"path": "developer"
+				},
+				{
+					"name": "active",
+					"kind": "storage",
+					"scope": "public",
+					"type": "bool",
+					"events": [
+						{
+							"kind": "init",
+							"from": "$mainModel.Developer.active.events.init",
+							"userDefined": true
+						}
+					]
+				},
+				{
+					"name": "taskCount",
+					"kind": "calculated",
+					"scope": "public",
+					"type": "number",
+					"scriptKind": "javascript",
+					"onGet": [
+						{
+							"from": "$mainModel.Developer.taskCount.onGet",
+							"userDefined": true
+						}
+					]
+				}
+			],
+			"events": [
+				{
+					"kind": "remove",
+					"from": "$mainModel.Developer.events.remove",
+					"userDefined": true
+				},
+				{
+					"kind": "validate",
+					"from": "$mainModel.Developer.events.validate",
+					"userDefined": true
+				},
+				{
+					"kind": "restrict",
+					"from": "$mainModel.Developer.events.restrict",
+					"userDefined": true
+				}
+			],
+			"methods": [
+				{
+					"name": "addDeveloper",
+					"applyTo": "dataClass",
+					"scope": "public",
+					"from": "$mainModel.Developer.methods.addDeveloper",
+					"userDefined": true
+				},
+				{
+					"name": "assignTo",
+					"applyTo": "entity",
+					"scope": "public",
+					"from": "$mainModel.Developer.entityMethods.assignTo",
+					"userDefined": true
+				},
+				{
+					"name": "editDeveloper",
+					"applyTo": "dataClass",
+					"scope": "public",
+					"from": "$mainModel.Developer.methods.editDeveloper",
+					"userDefined": true
+				},
+				{
+					"name": "getActiveDevelopers",
+					"applyTo": "dataClass",
+					"scope": "public",
+					"from": "$mainModel.Developer.methods.getActiveDevelopers",
+					"userDefined": true
+				},
+				{
+					"name": "getDevelopers",
+					"applyTo": "dataClass",
+					"scope": "public",
+					"from": "$mainModel.Developer.methods.getDevelopers",
+					"userDefined": true
+				}
+			]
+		},
+		{
+			"name": "Project",
+			"className": "Project",
+			"collectionName": "ProjectCollection",
+			"matchTable": "Todo",
+			"scope": "public",
+			"attributes": [
+				{
+					"name": "ID",
+					"kind": "storage",
+					"scope": "public",
+					"unique": true,
+					"autosequence": true,
+					"type": "long",
+					"primKey": true
+				},
+				{
+					"name": "assignements",
+					"kind": "relatedEntities",
+					"matchColumn": "assignementCollection",
+					"scope": "public",
+					"type": "AssignementCollection",
+					"reversePath": true,
+					"path": "project"
+				},
+				{
+					"name": "tasks",
+					"kind": "relatedEntities",
+					"matchColumn": "taskCollection",
+					"scope": "public",
+					"type": "TaskCollection",
+					"reversePath": true,
+					"path": "project"
+				},
+				{
+					"name": "name",
+					"kind": "storage",
+					"scope": "public",
+					"type": "string"
+				},
+				{
+					"name": "type",
+					"kind": "storage",
+					"scope": "public",
+					"type": "string"
+				}
+			]
+		},
+		{
+			"name": "Task",
+			"className": "Task",
+			"collectionName": "TaskCollection",
+			"matchTable": "Tasks",
+			"scope": "public",
+			"attributes": [
+				{
+					"name": "ID",
+					"kind": "storage",
+					"scope": "public",
+					"unique": true,
+					"autosequence": true,
+					"type": "long",
+					"primKey": true
+				},
+				{
+					"name": "label",
+					"kind": "storage",
+					"matchColumn": "Lael",
+					"scope": "public",
+					"type": "string"
+				},
+				{
+					"name": "project",
+					"kind": "relatedEntity",
+					"scope": "public",
+					"type": "Project",
+					"path": "Project"
+				},
+				{
+					"name": "developer",
+					"kind": "relatedEntity",
+					"scope": "public",
+					"type": "Developer",
+					"path": "Developer"
+				}
+			],
+			"methods": [
+				{
+					"name": "getUserTasks",
+					"applyTo": "dataClass",
+					"scope": "public",
+					"from": "$mainModel.Task.methods.getUserTasks",
+					"userDefined": true
+				}
+			]
+		},
+		{
+			"name": "User",
+			"className": "User",
+			"collectionName": "UserCollection",
+			"scope": "publicOnServer",
+			"attributes": [
+				{
+					"name": "ID",
+					"kind": "storage",
+					"scope": "public",
+					"unique": true,
+					"autosequence": true,
+					"type": "long",
+					"primKey": true
+				},
+				{
+					"name": "username",
+					"kind": "storage",
+					"scope": "public",
+					"unique": true,
+					"type": "string"
+				},
+				{
+					"name": "password",
+					"kind": "storage",
+					"scope": "public",
+					"type": "string"
+				},
+				{
+					"name": "accessType",
+					"kind": "storage",
+					"matchColumn": "role",
+					"scope": "public",
+					"type": "number"
+				},
+				{
+					"name": "email",
+					"kind": "storage",
+					"scope": "public",
+					"type": "string"
+				},
+				{
+					"name": "fullName",
+					"kind": "storage",
+					"scope": "public",
+					"type": "string"
+				}
+			],
+			"methods": [
+				{
+					"name": "addUser",
+					"applyTo": "dataClass",
+					"scope": "publicOnServer",
+					"from": "$mainModel.User.methods.addUser",
+					"userDefined": true
+				}
+			]
+		}
+	]
+}
